@@ -101,5 +101,5 @@ env:
   - name: DATABASE_PASSWORD
     value: todopwd
   - name: DATABASE_SVC
-    value: todo-list-mariadb
+    value: ex288-php-mysql-mariadb
 
