@@ -2,7 +2,7 @@ apiVersion: template.openshift.io/v1
 kind: Template
 labels:
   app: cakephp-mysql-example
-  template: cakephp-mysql-example
+  template: php-mysql-exam
 message: |-
   The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.
 
@@ -25,6 +25,7 @@ metadata:
   creationTimestamp: "2022-03-13T03:59:24Z"
   labels:
     samples.operator.openshift.io/managed: "true"
+    template: php-mysql-exam
   managedFields:
   - apiVersion: template.openshift.io/v1
     fieldsType: FieldsV1
@@ -55,8 +56,8 @@ metadata:
     manager: cluster-samples-operator
     operation: Update
     time: "2022-03-13T03:59:24Z"
-  name: cakephp-mysql-example
-  namespace: openshift
+  name: ex288-exam
+  namespace: indy
   resourceVersion: "17781"
   selfLink: /apis/template.openshift.io/v1/namespaces/openshift/templates/cakephp-mysql-example
   uid: 9c0fbed5-ffa3-4f9e-95e7-2c9c1ac4ff40
@@ -163,6 +164,10 @@ objects:
       spec:
         containers:
         - env:
+          - name: HELLO_MESSAGE
+            value: ${HELLO_MESSAGE}
+          - name: HELLO_AUDIENCE
+            value: ${HELLO_AUDIENCE}      
           - name: DATABASE_SERVICE_NAME
             value: ${DATABASE_SERVICE_NAME}
           - name: DATABASE_ENGINE
@@ -304,7 +309,7 @@ objects:
         - mysql
         from:
           kind: ImageStreamTag
-          name: mysql:8.0-el8
+          name: mysql:8.0
           namespace: ${NAMESPACE}
       type: ImageChange
     - type: ConfigChange
@@ -348,6 +353,7 @@ parameters:
 - description: The exposed hostname that will route to the CakePHP service, if left blank a value will be defaulted.
   displayName: Application Hostname
   name: APPLICATION_DOMAIN
+  required: true
 - description: Github trigger secret.  A difficult to guess string encoded as part of the webhook URL.  Not encrypted.
   displayName: GitHub Webhook Secret
   from: '[a-zA-Z0-9]{40}'
@@ -395,3 +401,7 @@ parameters:
   displayName: MySQL authentication plugin
   name: MYSQL_DEFAULT_AUTHENTICATION_PLUGIN
   value: mysql_native_password
+- name: HELLO_MESSAGE
+  value: Benjour
+- name: HELLO_AUDIENCE
+  value: Engineers!!  
